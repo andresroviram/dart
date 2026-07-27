@@ -1,24 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_swap/flutter_swap.dart';
+import 'package:flutter/widgets.dart';
 
-import 'src/app.dart';
-import 'config.dart';
-import 'src/logger.dart';
+import 'src/app_rfwtxt.dart';
 
 void main() {
-  SwapLogger.instance = ConsoleSwapLogger();
-  runApp(
-    const App(
-      /// Create a `config.dart` file and put your configuration there.
-      ///
-      /// ```dart
-      /// import 'src/app.dart';
-      ///
-      /// const Config config = (
-      ///     baseUrl: 'https://swap-server-sample-qgl9u4r-aloisdeniel.globeapp.dev',
-      /// );
-      /// ```
-      config: config,
-    ),
+  const baseUrl = String.fromEnvironment(
+    'RFW_BASE_URL',
+    defaultValue: 'http://10.0.2.2:8080',
   );
+
+  runApp(const RfwOnboardingApp(baseUrl: baseUrl));
 }

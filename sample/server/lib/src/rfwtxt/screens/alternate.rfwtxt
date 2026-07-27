@@ -1,0 +1,53 @@
+import core.widgets;
+
+widget root = AlternateScreen();
+
+widget AlternateScreen { tapped: false } = SafeArea(
+  child: ColoredBox(
+    color: 0xFF102A43,
+    child: Center(
+      child: Padding(
+        padding: [ 28.0 ],
+        child: Column(
+          mainAxisAlignment: "center",
+          children: [
+            Text(
+              text: "Interfaz remota actualizada",
+              textAlign: "center",
+              style: { color: 0xFFFFFFFF, fontSize: 28.0, fontWeight: "w700" },
+            ),
+            SizedBox(height: 14.0),
+            Text(
+              text: "Este diseño fue cargado desde alternate.rfwtxt sin recompilar la app.",
+              textAlign: "center",
+              style: { color: 0xFFD9E2EC, fontSize: 15.0, height: 1.4 },
+            ),
+            SizedBox(height: 28.0),
+            GestureDetector(
+              onTap: set state.tapped = true,
+              child: Container(
+                padding: [ 16.0, 12.0 ],
+                decoration: { type: "box", color: 0xFF00A82D, borderRadius: [ { x: 10.0 } ] },
+                child: Text(
+                  text: switch state.tapped {
+                    true: "Interacción RFW confirmada",
+                    false: "Probar interacción remota",
+                  },
+                  style: { color: 0xFFFFFFFF, fontSize: 15.0, fontWeight: "w600" },
+                ),
+              ),
+            ),
+            SizedBox(height: 18.0),
+            GestureDetector(
+              onTap: event "openScreen" { screen: "gopass" },
+              child: Text(
+                text: "Volver a Gopass",
+                style: { color: 0xFF9FB3C8, fontSize: 14.0, fontWeight: "w600" },
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  ),
+);

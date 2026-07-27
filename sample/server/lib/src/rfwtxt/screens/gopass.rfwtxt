@@ -1,0 +1,244 @@
+import core.widgets;
+import gopass.local;
+import material.widgets;
+
+widget root = GopassOnboarding();
+
+widget GopassOnboarding = SafeArea(
+  child: ColoredBox(
+    color: 0xFFFFFFFF,
+    child: SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: "stretch",
+        children: [
+          SizedBox(
+            height: 300.0,
+            child: Image(
+              source: "assets/images/onboarding_car.jpeg",
+              fit: "cover",
+              alignment: { x: 0.0, y: -0.7 },
+              filterQuality: "high",
+            ),
+          ),
+          SizedBox(height: 28.0),
+          Center(
+            child: Image(
+              source: "assets/images/gopass_logo.jpeg",
+              width: 178.0,
+              height: 55.0,
+              fit: "contain",
+              filterQuality: "high",
+            ),
+          ),
+          SizedBox(height: 35.0),
+          SizedBox(
+            height: 48.0,
+            child: Stack(
+              fit: "expand",
+              children: [
+                PagerCopy(
+                  active: switch data.onboarding.page { 1: true, default: false },
+                  previous: switch data.onboarding.previousPage { 1: true, default: false },
+                  direction: data.onboarding.direction,
+                  text: "Consulta tus pagos pendientes de\nmanera rápida y segura",
+                ),
+                PagerCopy(
+                  active: switch data.onboarding.page { 2: true, default: false },
+                  previous: switch data.onboarding.previousPage { 2: true, default: false },
+                  direction: data.onboarding.direction,
+                  text: "Recibe información de tu vehículo\nen un solo lugar",
+                ),
+                PagerCopy(
+                  active: switch data.onboarding.page { 3: true, default: false },
+                  previous: switch data.onboarding.previousPage { 3: true, default: false },
+                  direction: data.onboarding.direction,
+                  text: "Paga tu SOAT, impuesto y multas de\nmanera fácil y segura",
+                ),
+                PagerCopy(
+                  active: switch data.onboarding.page { 4: true, default: false },
+                  previous: switch data.onboarding.previousPage { 4: true, default: false },
+                  direction: data.onboarding.direction,
+                  text: "Disfruta tus viajes con todos tus\npagos al día",
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 30.0),
+          Row(
+            mainAxisAlignment: "center",
+            children: [
+              PagerDot(
+                color: switch data.onboarding.page { 1: 0xFF37363A, default: 0xFFD9D9DD },
+                onTap: event "setPage" { page: 1 },
+              ),
+              PagerDot(
+                color: switch data.onboarding.page { 2: 0xFF37363A, default: 0xFFD9D9DD },
+                onTap: event "setPage" { page: 2 },
+              ),
+              PagerDot(
+                color: switch data.onboarding.page { 3: 0xFF37363A, default: 0xFFD9D9DD },
+                onTap: event "setPage" { page: 3 },
+              ),
+              PagerDot(
+                color: switch data.onboarding.page { 4: 0xFF37363A, default: 0xFFD9D9DD },
+                onTap: event "setPage" { page: 4 },
+              ),
+            ],
+          ),
+          SizedBox(height: 31.0),
+          Text(
+            text: "Ingresa a tu cuenta",
+            textAlign: "center",
+            style: { color: 0xFF242329, fontSize: 24.0, fontWeight: "w800" },
+          ),
+          SizedBox(height: 22.0),
+          Padding(
+            padding: [ 34.0, 0.0 ],
+            child: PhoneNumberField(
+              value: data.form.phone,
+              onChanged: event "phoneChanged" { },
+            ),
+          ),
+          SizedBox(height: 12.0),
+          Padding(
+            padding: [ 34.0, 0.0 ],
+            child: ContinueButton(
+              enabled: switch data.form.phone { "": false, default: true },
+            ),
+          ),
+          SizedBox(height: 6.0),
+          Text(
+            text: data.interaction.message,
+            textAlign: "center",
+            style: { color: 0xFF00A82D, fontSize: 13.0, fontWeight: "w500" },
+          ),
+          SizedBox(height: 9.0),
+          Row(
+            mainAxisAlignment: "center",
+            children: [
+              SocialButton(
+                kind: "google",
+                onTap: event "showAction" { message: "Acción visual de Google activada." },
+              ),
+              SizedBox(width: 5.0),
+              SocialButton(
+                kind: "face-id",
+                onTap: event "showAction" { message: "Acción visual de Face ID activada." },
+              ),
+              SizedBox(width: 5.0),
+              SocialButton(
+                kind: "apple",
+                onTap: event "showAction" { message: "Acción visual de Apple activada." },
+              ),
+            ],
+          ),
+          SizedBox(height: 24.0),
+        ],
+      ),
+    ),
+  ),
+);
+
+widget PagerDot = GestureDetector(
+  onTap: args.onTap,
+  child: SizedBox(
+    width: 18.0,
+    height: 18.0,
+    child: Center(
+      child: Container(
+        width: 5.0,
+        height: 5.0,
+        decoration: { type: "box", color: args.color, borderRadius: [ { x: 3.0 } ] },
+      ),
+    ),
+  ),
+);
+
+widget PagerCopy { active: false, previous: false, direction: "forward" } = Align(
+  duration: 260,
+  curve: "easeOut",
+  alignment: switch args.active {
+    true: { x: 0.0, y: 0.0 },
+    default: switch args.previous {
+      true: switch args.direction {
+        "forward": { x: -1.2, y: 0.0 },
+        default: { x: 1.2, y: 0.0 },
+      },
+      default: switch args.direction {
+        "forward": { x: 1.2, y: 0.0 },
+        default: { x: -1.2, y: 0.0 },
+      },
+    },
+  },
+  child: Opacity(
+    duration: 220,
+    curve: "easeOut",
+    opacity: switch args.active { true: 1.0, default: 0.0 },
+    alwaysIncludeSemantics: false,
+    child: Padding(
+      padding: [ 24.0, 0.0 ],
+      child: Text(
+        text: args.text,
+        textAlign: "center",
+        style: { color: 0xFF37363A, fontSize: 14.0, fontWeight: "w500", height: 1.45 },
+      ),
+    ),
+  ),
+);
+
+widget ContinueButton { enabled: false } = switch args.enabled {
+  true: Material(
+    color: 0xFF00A82D,
+    borderRadius: [ { x: 9.0 } ],
+    clipBehavior: "hardEdge",
+    child: InkWell(
+      onTap: event "showToast" { message: "Número telefónico registrado." },
+      borderRadius: [ { x: 9.0 } ],
+      hoverColor: 0x14000000,
+      highlightColor: 0x20000000,
+      splashColor: 0x33000000,
+      child: ContinueButtonSurface(
+        background: 0x00000000,
+        labelColor: 0xFFFFFFFF,
+      ),
+    ),
+  ),
+  default: ContinueButtonSurface(
+    background: 0xFFF0F0F1,
+    labelColor: 0xFF747278,
+  ),
+};
+
+widget ContinueButtonSurface = Container(
+  height: 50.0,
+  decoration: { type: "box", color: args.background, borderRadius: [ { x: 9.0 } ] },
+  child: Center(
+    child: Text(
+      text: "Continuar",
+      style: { color: args.labelColor, fontSize: 14.0, fontWeight: "w600" },
+    ),
+  ),
+);
+
+widget SocialButton = Material(
+  color: 0xFFFFFFFF,
+  borderRadius: [ { x: 9.0 } ],
+  clipBehavior: "hardEdge",
+  child: InkWell(
+    onTap: args.onTap,
+    borderRadius: [ { x: 9.0 } ],
+    hoverColor: 0x1200A82D,
+    highlightColor: 0x1F00A82D,
+    splashColor: 0x3300A82D,
+    child: Container(
+      width: 108.0,
+      height: 58.0,
+      decoration: {
+        type: "box",
+        borderRadius: [ { x: 9.0 } ],
+        border: [ { color: 0xFFF0F0F2, width: 1.0 } ],
+      },
+      child: Center(child: SocialIcon(kind: args.kind)),
+    ),
+  ),
+);
