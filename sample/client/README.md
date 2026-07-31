@@ -8,9 +8,9 @@ library. The onboarding layout itself is loaded from the server at runtime.
 Start `sample/server` first, then run:
 
 ```sh
+cd sample/client
 fvm flutter pub get
-fvm flutter run -d emulator-5554 \
-  --dart-define=RFW_BASE_URL=http://10.0.2.2:8080
+fvm flutter run -d emulator-5554 --dart-define=RFW_BASE_URL=http://10.0.2.2:8080
 ```
 
 `RFW_BASE_URL` defaults to `http://10.0.2.2:8080`, which is the Android

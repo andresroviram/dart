@@ -5,24 +5,34 @@ Widgets (RFW) onboarding sample under `sample/`.
 
 ## Run the sample
 
-1. Start the server:
+<!-- markdownlint-disable MD033 -->
 
-   ```sh
-   cd sample/server
-   fvm dart pub get
-   PORT=8080 fvm dart run bin/server.dart
-   ```
+<table width="100%">
+  <tr>
+    <td width="50%" valign="top">
+      <img
+        src="sample/client/docs/gopass-android.png"
+        alt="Gopass Android onboarding"
+        width="320">
+    </td>
+    <td width="50%" valign="top">
+      <p><strong>1. Start the server:</strong></p>
+      <pre><code class="language-sh">cd sample/server</code></pre>
+      <pre><code class="language-sh">fvm dart pub get</code></pre>
+      <pre><code class="language-sh">PORT=8080 fvm dart run bin/server.dart</code></pre>
+      <p><strong>2. Run the Android client in another terminal:</strong></p>
+      <pre><code class="language-sh">cd sample/client</code></pre>
+      <pre><code class="language-sh">fvm flutter pub get</code></pre>
+      <pre><code class="language-sh">fvm flutter emulators --launch Pixel_14</code></pre>
+      <pre><code class="language-sh">fvm flutter run -d emulator-5554 \
+  --dart-define=RFW_BASE_URL=\
+http://10.0.2.2:8080</code></pre>
+      <p>The Android emulator reaches the host server through <code>10.0.2.2</code>.</p>
+    </td>
+  </tr>
+</table>
 
-2. Run the Android client in another terminal:
-
-   ```sh
-   cd sample/client
-   fvm flutter pub get
-   fvm flutter run -d emulator-5554 \
-     --dart-define=RFW_BASE_URL=http://10.0.2.2:8080
-   ```
-
-The Android emulator reaches the host server through `10.0.2.2`.
+<!-- markdownlint-enable MD033 -->
 
 ## Runtime RFW flow
 

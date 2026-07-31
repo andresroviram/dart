@@ -3,6 +3,7 @@
 ## Run
 
 ```sh
+cd sample/server
 fvm dart pub get
 PORT=8080 fvm dart run bin/server.dart
 ```
